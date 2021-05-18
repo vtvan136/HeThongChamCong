@@ -184,10 +184,130 @@ def getNewID():
             return result
     
 
+def updateName(id, new_name):
+    '''
+    Hàm dùng để thay đổi tên User dựa theo ID trên database
+
+    Param: id: int, new_name: str
+    Return: 1 if True else -1
+    '''
+    con = createConnection()
+    cur = con.cursor()
+    if findUser(id) != -1:
+        user = findUser(id)
+        type = user.type
+        sql = "UPDATE User SET NAME = ? WHERE ID = ?"
+        cur.execute(sql, (new_name, str(id)))
+        if type == "Admin":
+            sql1 = "UPDATE Admin SET NAME = ? WHERE ID  = ?"
+        else:
+            sql1 = "UPDATE Staff SET NAME = ? WHERE ID  = ?"
+        cur.execute(sql1, (new_name, str(id)))
+        con.commit()
+        con.close()
+        return 1
+    else:
+        return -1
+
+def updatePosition(id, new_position):
+    '''
+    Hàm dùng để thay đổi chức vụ User dựa theo ID trên database
+
+    Param: id: int, new_position: str
+    Return: 1 if True else -1
+    '''
+    con = createConnection()
+    cur = con.cursor()
+    if findUser(id) != -1:
+        user = findUser(id)
+        type = user.type
+        sql = "UPDATE User SET POSITION = ? WHERE ID = ?"
+        cur.execute(sql, (new_position, str(id)))
+        if type == "Admin":
+            sql1 = "UPDATE Admin SET POSITION = ? WHERE ID  = ?"
+        else:
+            sql1 = "UPDATE Staff SET POSITION = ? WHERE ID  = ?"
+        cur.execute(sql1, (new_position, str(id)))
+        con.commit()
+        con.close()
+        return 1
+    else:
+        return -1
+
+def updatePassword(id, new_password):
+    '''
+    Hàm dùng để thay đổi password User dựa theo ID trên database
+
+    Param: id: int, new_password: str
+    Return: 1 if True else -1
+    '''
+    con = createConnection()
+    cur = con.cursor()
+    if findUser(id) != -1:
+        user = findUser(id)
+        sql = "UPDATE User SET PASSWORD = ? WHERE ID = ?"
+        cur.execute(sql, (new_password, str(id)))
+        con.commit()
+        con.close()
+        return 1
+    else:
+        return -1
+
+def updateType(id):
+    '''
+    Hàm dùng để thay đổi type User dựa theo ID trên database
+
+    Param: id: int
+    Return: 1 if True else -1
+    '''
+    con = createConnection()
+    cur = con.cursor()
+    if findUser(id) != -1:
+        user = findUser(id)
+        type = user.type
+        new_type = "Admin" if type == "Staff" else "Staff"
+        sql = "UPDATE User SET TYPE = ? WHERE ID = ?" 
+        cur.execute(sql, (new_type, str(id)))
+        if type == "Admin":
+            sql1 = "DELETE FROM Admin WHERE id=" + str(id)
+            sql2 = "INSERT INTO Staff(ID, NAME, POSITION) VALUES(?,?,?)"
+        else:
+            sql1 = "DELETE FROM Staff WHERE id=" + str(id)
+            sql2 = "INSERT INTO Admin(ID, NAME, POSITION) VALUES(?,?,?)"
+        con.execute(sql1)
+        con.execute(sql2, (user.id, user.name, user.position))
+        con.commit()
+        con.close()
+        return 1
+    else:
+        return -1
+    
+
+def signIn(id, password):
+    '''
+    Hàm dùng để đăng nhập 
+
+    Param: ID, password
+    Return: 1 nếu thành công, -1 nếu sai ID, -2 nếu sai pass 
+    '''
+    if findUser(id) != -1:
+        con = createConnection()
+        cur = con.cursor()
+        sql = "SELECT PASSWORD FROM User WHERE ID = ?"
+        cur.execute(sql, str(id))
+        flag = cur.fetchall()[0][0]
+        con.close()
+        if flag == password:
+            return 1            
+        else:
+            return -2
+    else:
+        return -1 
+
+
 '''
 insertUser("1", "Trần Tuấn Khôi", "Manager", "Admin", "123")
 insertUser("2", "Trần Dương Long", "Manager", "Admin", "123")
 insertUser("3", "Võ Tấn Văn", "Manager", "Admin", "123")'''
 
-print(getNewID())
-
+print(signIn(2, "123"))

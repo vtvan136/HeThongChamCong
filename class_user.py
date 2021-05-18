@@ -15,7 +15,9 @@ class User:
         Input: thời gian chấm công (id)
         '''
         pass
-
+    def signIn(self, id, pass):
+        from SQLite import signIn
+        return signIn(id, pass)
 
 
 class Staff(User):
@@ -56,3 +58,7 @@ class Admin(User):
     def getNewID(self):
         from SQLite import getNewID
         return getNewID()
+
+    def insertUser(self, id, name, position, type, password):
+        from SQLite import insertUser
+        return insertUser(id, name, position, type, password)
