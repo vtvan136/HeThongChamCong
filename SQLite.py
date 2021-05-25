@@ -8,7 +8,7 @@ def createConnection():
     Param: None
     Return: đối tượng connection
     '''
-    path = "F:\Projects\ChamCong\HeThongChamCong\Data\Data.db"
+    path = "Data/Data.db"
     connection = None
     try:
         connection = sqlite3.connect(path)
@@ -17,7 +17,7 @@ def createConnection():
         print(f"The error '{e}' occurred")
 
     return connection
-path = "F:\Projects\ChamCong\HeThongChamCong\Data\Data.db"
+path = "Data/Data.db"
 
 def insertUser(id, name, position, type, password):
     '''
@@ -133,6 +133,17 @@ def findUser(id):
     else:
         return -1
 
+def getNameByID(id):
+    '''
+    Hàm trả về tên User dựa theo ID
+    
+    Input: id:int
+    Return: Name: string
+    '''
+    from class_user import User
+    user = findUser(id)
+    return user.name
+
 def delUser(id):
     '''
     Hàm xóa đối tượng User ra khỏi database được set ở path trong createConnection 
@@ -183,6 +194,7 @@ def getNewID():
             con.close()
             return result
     
+
 
 def updateName(id, new_name):
     '''
@@ -305,9 +317,10 @@ def signIn(id, password):
         return -1 
 
 
+
 '''
 insertUser("1", "Trần Tuấn Khôi", "Manager", "Admin", "123")
 insertUser("2", "Trần Dương Long", "Manager", "Admin", "123")
 insertUser("3", "Võ Tấn Văn", "Manager", "Admin", "123")'''
 
-print(signIn(2, "123"))
+print(getNameByID(1))
