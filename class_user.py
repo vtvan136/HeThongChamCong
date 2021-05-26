@@ -1,6 +1,3 @@
-from numpy import array
-
-
 class User:
     def __init__(self, id = None, name = None, position = None, type = None, password = None):
         self.id = id
@@ -15,9 +12,9 @@ class User:
         Input: thời gian chấm công (id)
         '''
         pass
-    def signIn(self, id, pass):
+    def signIn(self, id, password):
         from SQLite import signIn
-        return signIn(id, pass)
+        return signIn(id, password)
 
 
 class Staff(User):
