@@ -37,7 +37,7 @@ def insertUser(id, name, position, type, password):
         sql = "INSERT INTO Staff(ID, NAME, POSITION) VALUES(?,?,?)"
     user = (id, name, position)
     cur.execute(sql, user)
-    print("Insert user")
+    print("Inserting user in Database")
     con.commit()
     con.close()
         
@@ -162,6 +162,7 @@ def delUser(id):
         else:
             sql1 = "DELETE FROM Staff WHERE id = " + str(id)
         cur.execute(sql1)
+        print("Removing user")
         con.commit()
         con.close()
         return 1
@@ -193,8 +194,6 @@ def getNewID():
         else:
             con.close()
             return result
-    
-
 
 def updateName(id, new_name):
     '''
@@ -300,7 +299,7 @@ def signIn(id, password):
     Hàm dùng để đăng nhập 
 
     Param: ID, password
-    Return: 1 nếu thành công, -1 nếu sai ID, -2 nếu sai pass 
+    Return: id nếu thành công, -1 nếu sai ID, -2 nếu sai pass 
     '''
     if findUser(id) != -1:
         con = createConnection()
@@ -310,7 +309,7 @@ def signIn(id, password):
         flag = cur.fetchall()[0][0]
         con.close()
         if flag == password:
-            return 1            
+            return id            
         else:
             return -2
     else:
@@ -323,4 +322,4 @@ insertUser("1", "Trần Tuấn Khôi", "Manager", "Admin", "123")
 insertUser("2", "Trần Dương Long", "Manager", "Admin", "123")
 insertUser("3", "Võ Tấn Văn", "Manager", "Admin", "123")'''
 
-print(getNameByID(1))
+
