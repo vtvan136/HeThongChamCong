@@ -33,8 +33,8 @@ def collate_fn(x):
     return x[0]
 
 def extractingFolder():
-    dataset = datasets.ImageFolder('Indian-celebrities')
-    index_to_class = os.listdir("Indian-celebrities")
+    dataset = datasets.ImageFolder('Img\Indian-celebrities')
+    index_to_class = os.listdir("Img\Indian-celebrities")
     loader = DataLoader(dataset, collate_fn=collate_fn)
     
     #khởi tạo MTCNN để phát hiện khuôn mặt
@@ -95,3 +95,4 @@ if result != -1:
     print('Face matched with: ', result[0], 'with distance: ', result[1])
 else:
     print("No exist")'''
+extractingFolder()

@@ -315,11 +315,28 @@ def signIn(id, password):
     else:
         return -1 
 
+def getListID():
+    '''
+    Hàm lấy danh sách các id của User
 
+    Param: None
+    Return: danh sách các id của User
+    '''
+    con = createConnection()
+    cur = con.cursor()
+    sql = "SELECT ID FROM USER"
+    cur.execute(sql)
+    list_id = []
+    while True:
+        row = cur.fetchone()
+        if row == None:
+            break
+        list_id.append(row[0])
+
+    return list_id
 
 '''
 insertUser("1", "Trần Tuấn Khôi", "Manager", "Admin", "123")
 insertUser("2", "Trần Dương Long", "Manager", "Admin", "123")
 insertUser("3", "Võ Tấn Văn", "Manager", "Admin", "123")'''
-
 

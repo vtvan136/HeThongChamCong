@@ -81,6 +81,7 @@ def prepare_for_facematch():
     return resnet, saved_data
 
 def checkMatch(img, resnet, saved_data):
+    print("Checking!")
     result = model.face_match(img, resnet, saved_data)
     if result != -1:
         return result[0]
@@ -96,4 +97,6 @@ def getTimeSheet():
 
 ## Test
 #signUp(10, "test", "aasd", "admin", "asd")
-print(updateUser(1, "Trần Tuấn Khôi", "Team Leader", "Admin", "123"))
+
+'''resnet, saved_data = prepare_for_facematch()
+print(checkMatch("Img\data_test\download.jpg", resnet, saved_data))'''
